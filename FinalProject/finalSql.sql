@@ -102,11 +102,11 @@ Flight
 Description
 */
 create table Flight (
-	FlightID 					VARCHAR(20) 		NOT NULL,	/* PK */
+	FlightId 					VARCHAR(20) 		NOT NULL,	/* PK */
 	DepartureTime				Date,
 	ArrivalTime					Date,
 	FlightType					Varchar(64),
-	Destination					,	/* This is multivalued */
+	FlightSchedule				As FlightSchedule	,	/* This is multivalued */
 	Length						AS ArrivalTime - DepartureTime	
 
 
@@ -114,15 +114,36 @@ create table Flight (
 /* Set up the Primary Keys */
 ALTER TABLE Flight
 ADD CONSTRAINT FlightPrimaryKey
-PRIMARY KEY (FlightID);
+PRIMARY KEY (FlightId);
 
+
+CREATE TABLE FlightSchedule (
+	FlightSheduleId			    VARCHAR(20)		NOT NULL, /* PK */
+	FlightId 				    VARCHAR(20),
+	DepartureTime				Date,
+	ArrivalTime					Date,
+	FlightType					Varchar(64),
+	DepartureAirport			Varchar(64),
+	ArrivalAirport				Varchar(64),
+	Length						AS ArrivalTime - DepartureTime	
+
+);
+ALTER TABLE FlightSchedule 
+ADD CONSTRAINT FlightSchedulePrimaryKey
+PRIMARY KEY (FlightScheduleId)
+
+
+ALTER TABLE FlightSchedule
+ADD CONSTRAINT FlightScheduleForeignKey
+FOREIGN KEY (FlightId);
+REFERENCES Flights (FlightId);
 /*******************************************************************************
 Employee
 
 This table models employees at an airport. 
 */
 create table Employee (
-	EmployeeID					VARCHAR(20) 		NOT NULL,	/* PK */
+	EmployeeId					VARCHAR(20) 		NOT NULL,	/* PK */
 	Name 						VARCHAR(70) 		NOT NULL,	
 	Email 		 				VARCHAR(60), 			
 	Phone 		 				VARCHAR(20) 		NOT NULL,	
@@ -133,8 +154,8 @@ create table Employee (
 
 /* Set up the Primary Keys */
 ALTER TABLE Employee
-ADD CONSTRAINT EmplyeeID_PK
-PRIMARY KEY (EmployeeID);
+ADD CONSTRAINT EmplyeeIdPrimaryKey
+PRIMARY KEY (EmployeeId);
 
 
 /*******************************************************************************
@@ -143,15 +164,15 @@ CrewMemeber
 This table models crew members at an airport. 
 */
 create table CrewMember (
-	EmployeeID					VARCHAR(20) 		NOT NULL,	/* PK */
+	EmployeeId					VARCHAR(20) 		NOT NULL,	/* PK */
 
 ); /* End of Creation of Name Table */
 
 /* Set up the Primary Keys */
 ALTER TABLE CrewMember
-ADD CONSTRAINT EmplyeeID_FK
-FOREIGN KEY (EmployeeID);
-REFERENCES Employee (EmployeeID);
+ADD CONSTRAINT EmplyeeIdForeignKey
+FOREIGN KEY (EmployeeId);
+REFERENCES Employee (EmployeeId);
 
 
 /*******************************************************************************
@@ -161,55 +182,55 @@ This table models crew members at an airport.
 */
 create table FlightCrew (
 	FlightDuty					VARCHAR(25)			NOT NULL,	/* PK */
-	EmployeeID					VARCHAR(20) 		NOT NULL,	/* FK */
-	FlightID					VARCHAR(20) 		NOT NULL,	/* FK */
+	EmployeeId					VARCHAR(20) 		NOT NULL,	/* FK */
+	FlightId					VARCHAR(20) 		NOT NULL,	/* FK */
 
 ); /* End of Creation of Name Table */
 
 /* Set up the Primary Keys */
 ALTER TABLE FlightCrew
-ADD CONSTRAINT EmplyeeID_FK
-FOREIGN KEY (EmployeeID);
-REFERENCES Employee (EmployeeID);
+ADD CONSTRAINT EmplyeeIdForeignKey
+FOREIGN KEY (EmployeeId);
+REFERENCES Employee (EmployeeId);
 
 ALTER TABLE FlightCrew
-ADD CONSTRAINT FlightID_FK
-FOREIGN KEY (FlightID);
-REFERENCES Flight (FlightID);
+ADD CONSTRAINT FlightIdForeignKey
+FOREIGN KEY (FlightId);
+REFERENCES Flight (FlightId);
 
 
 
 /*******************************************************************************
 CrewMemeber
 
-This table models incident reports at an airport. 
+This table models incIdent reports at an airport. 
 */
-create table IncidenceReport (
-	EmployeeID					VARCHAR(20) 		NOT NULL,	/* FK */
-	FlightID					VARCHAR(70)			NOT NULL,	/* FK */
-	ReportID					VARCHAR(20)			NOT NULL,   /* PK */
-	IncidentDate				DATE				NOT NULL,
+create table IncIdenceReport (
+	EmployeeId					VARCHAR(20) 		NOT NULL,	/* FK */
+	FlightId					VARCHAR(70)			NOT NULL,	/* FK */
+	ReportId					VARCHAR(20)			NOT NULL,   /* PK */
+	IncIdentDate				DATE				NOT NULL,
 	Maintenance					VARCHAR(60)			NOT NULL,
-	IncidentType				VARCHAR(35)			NOT NULL,
-	IncidenceDescription		VARCHAR(256),
+	IncIdentType				VARCHAR(35)			NOT NULL,
+	IncIdenceDescription		VARCHAR(256),
 
 ); /* End of Creation of Name Table */
 
 /* Set up the Primary Keys */
-ALTER TABLE IncidenceReport
-ADD CONSTRAINT ReportID_PK
-PRIMARY KEY (ReportID);
-REFERENCES Employee (ReportID);
+ALTER TABLE IncIdenceReport
+ADD CONSTRAINT ReportIdPrimaryKey
+PRIMARY KEY (ReportId);
+REFERENCES Employee (ReportId);
 
-ALTER TABLE IncidenceReport
-ADD CONSTRAINT EmplyeeID_FK
-FOREIGN KEY (EmployeeID);
-REFERENCES Employee (EmployeeID);
+ALTER TABLE IncIdenceReport
+ADD CONSTRAINT EmplyeeIdForeignKey
+FOREIGN KEY (EmployeeId);
+REFERENCES Employee (EmployeeId);
 
-ALTER TABLE IncidenceReport
-ADD CONSTRAINT FlightID_FK
-FOREIGN KEY (FlightID);
-REFERENCES Flight (FlightID);
+ALTER TABLE IncIdenceReport
+ADD CONSTRAINT FlightIdForeignKey
+FOREIGN KEY (FlightId);
+REFERENCES Flight (FlightId);
 
 
 /*******************************************************************************
@@ -218,7 +239,7 @@ Passenger
 This table models passengers at an airport. 
 */
 create table Passenger (
-	PassengerID					VARCHAR(25)			NOT NULL,	/* PK */
+	PassengerId					VARCHAR(25)			NOT NULL,	/* PK */
 	PassengerName				VARCHAR(20) 		NOT NULL,	/* FK */
 	isFrequentFlier				BOOLEAN		 		NOT NULL,	/* FK */
 
@@ -226,8 +247,8 @@ create table Passenger (
 
 /* Set up the Primary Keys */
 ALTER TABLE Passenger
-ADD CONSTRAINT PassengerID_PK
-PRIMARY KEY (PassengerID);
+ADD CONSTRAINT PassengerIdPrimaryKey
+PRIMARY KEY (PassengerId);
 
 /*
 	THIS IS THE TEMPLATE THIS IS THE TEMPLATE THIS IS THE TEMPLATE
@@ -238,8 +259,8 @@ PassengerFlightAssignment
 This table models Passenger flight assignment at an airport
 */
 create table PassengerFlightAssignment (
-	FlightID 					VARCHAR(20) 		NOT NULL,	/* FK */
-	PassengerID					VARCHAR(20) 		NOT NULL,	/* FK */
+	FlightId 					VARCHAR(20) 		NOT NULL,	/* FK */
+	PassengerId					VARCHAR(20) 		NOT NULL,	/* FK */
 	ExtraChargesId				VARCHAR(20) 		NOT NULL,	/* FK */
 	SeatNumber 					VARCHAR(6) 			NOT NULL,	
 	MealPreference				VARCHAR(15),	
@@ -248,19 +269,19 @@ create table PassengerFlightAssignment (
 ); /* End of Creation of Name Table */
 
 ALTER TABLE PassengerFlightAssignment
-ADD CONSTRAINT FlightID_FK
-FOREIGN KEY (FlightID);
-REFERENCES Flight (FlightID);
+ADD CONSTRAINT FlightIdForeignKey
+FOREIGN KEY (FlightId);
+REFERENCES Flight (FlightId);
 
 ALTER TABLE PassengerFlightAssignment
-ADD CONSTRAINT PassengerID_FK
-FOREIGN KEY (PassengerID);
-REFERENCES Passenger (PassengerID);
+ADD CONSTRAINT PassengerIdForeignKey
+FOREIGN KEY (PassengerId);
+REFERENCES Passenger (PassengerId);
 
 ALTER TABLE PassengerFlightAssignment
-ADD CONSTRAINT ExtraChargesID_FK
-FOREIGN KEY (ExtraChargesID);
-REFERENCES ExtraCharges (ExtraChargesID);
+ADD CONSTRAINT ExtraChargesIdForeignKey
+FOREIGN KEY (ExtraChargesId);
+REFERENCES ExtraCharges (ExtraChargesId);
 
 
 */
@@ -271,15 +292,15 @@ This table models Passenger flight assignment at an airport
 */
 
 CREATE TABLE ExtraCharges (
-	ExtraChargesID				VARCHAR(20)			NOT NULL,	/* PK */
+	ExtraChargesId				VARCHAR(20)			NOT NULL,	/* PK */
 	Name						VARCHAR(20),
 	ChargeDate					DATE,
 	Amount						MONEY,
 )
 
 ALTER TABLE ExtraCharges
-ADD CONSTRAINT ExtraCharges_PK
-PRIMARY KEY (ExtraChargesID)
+ADD CONSTRAINT ExtraChargesPrimaryKey
+PRIMARY KEY (ExtraChargesId)
 
 
 
