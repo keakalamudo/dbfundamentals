@@ -37,8 +37,9 @@ are multiple airlines at each airport.
 */
 CREATE TABLE Airport (
 	FaaCode 				VARCHAR(16) 		NOT NULL,	/* PK */
-	Name					VARCHAR(256),
-	Location				VARCHAR(256)
+	Name					VARCHAR(64),
+	City					VARCHAR(64),
+	Country					VARCHAR(64),
 ); /* End of Creation of Airport Table */
 
 /* Set up the Primary Key */
@@ -103,10 +104,7 @@ Description
 */
 create table Flight (
 	FlightId 					VARCHAR(20) 		NOT NULL,	/* PK */
-	DepartureTime				Date,
-	ArrivalTime					Date,
 	FlightType					Varchar(64),
-	FlightSchedule				As FlightSchedule	,	/* This is multivalued */
 	Length						AS ArrivalTime - DepartureTime	
 
 
@@ -122,7 +120,6 @@ CREATE TABLE FlightSchedule (
 	FlightId 				    VARCHAR(20),
 	DepartureTime				Date,
 	ArrivalTime					Date,
-	FlightType					Varchar(64),
 	DepartureAirport			Varchar(64),
 	ArrivalAirport				Varchar(64),
 	Length						AS ArrivalTime - DepartureTime	
@@ -203,31 +200,31 @@ REFERENCES Flight (FlightId);
 /*******************************************************************************
 CrewMemeber
 
-This table models incIdent reports at an airport. 
+This table models Incident reports at an airport. 
 */
-create table IncIdenceReport (
+create table IncidenceReport (
 	EmployeeId					VARCHAR(20) 		NOT NULL,	/* FK */
 	FlightId					VARCHAR(70)			NOT NULL,	/* FK */
 	ReportId					VARCHAR(20)			NOT NULL,   /* PK */
-	IncIdentDate				DATE				NOT NULL,
+	IncidentDate				DATE				NOT NULL,
 	Maintenance					VARCHAR(60)			NOT NULL,
-	IncIdentType				VARCHAR(35)			NOT NULL,
-	IncIdenceDescription		VARCHAR(256),
+	IncidentType				VARCHAR(35)			NOT NULL,
+	IncidenceDescription		VARCHAR(256),
 
 ); /* End of Creation of Name Table */
 
 /* Set up the Primary Keys */
-ALTER TABLE IncIdenceReport
+ALTER TABLE IncidenceReport
 ADD CONSTRAINT ReportIdPrimaryKey
 PRIMARY KEY (ReportId);
 REFERENCES Employee (ReportId);
 
-ALTER TABLE IncIdenceReport
+ALTER TABLE IncidenceReport
 ADD CONSTRAINT EmplyeeIdForeignKey
 FOREIGN KEY (EmployeeId);
 REFERENCES Employee (EmployeeId);
 
-ALTER TABLE IncIdenceReport
+ALTER TABLE IncidenceReport
 ADD CONSTRAINT FlightIdForeignKey
 FOREIGN KEY (FlightId);
 REFERENCES Flight (FlightId);
