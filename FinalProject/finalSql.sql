@@ -19,9 +19,9 @@ It is used in the flight table and in the airportairline table
 */
 /* Create the Airport Table */
 CREATE TABLE Airline (
-	IcaoCode 				VARCHAR(256) 		NOT NULL,	/* PK */
-	Name					VARCHAR(256),
-	Headquarters			VARCHAR(256)
+	IcaoCode 				VARCHAR(8) 			NOT NULL,	/* PK */
+	Name					VARCHAR(64),
+	Headquarters			VARCHAR(32)
 ); /* End of Creation of Airline Table */
 
 /* Set up the Primary Key */
@@ -53,9 +53,9 @@ AirportAirline
 This table models an airline's presence at an airport. 
 */
 create table AirportAirline (
-	Terminal 				VARCHAR(256) 		NOT NULL,	/* PK */
-	IcaoCode 				VARCHAR(256) 		NOT NULL,	/* FK(Airline) -> PK */
-	FaaCode 				VARCHAR(256) 		NOT NULL,	/* FK(Airport) -> PK */
+	Terminal 				VARCHAR(64) 		NOT NULL,	/* PK */
+	IcaoCode 				VARCHAR(8) 			NOT NULL,	/* FK(Airline) -> PK */
+	FaaCode 				VARCHAR(8) 			NOT NULL,	/* FK(Airport) -> PK */
 
 ); /* End of Creation of Name Table */
 
@@ -84,10 +84,10 @@ Aircraft
 Description
 */
 create table Aircraft (
-	TailNumber 					VARCHAR(256) 		NOT NULL,	/* PK */
-	Name 						VARCHAR(256),
+	TailNumber 					VARCHAR(64) 		NOT NULL,	/* PK */
+	Name 						VARCHAR(64),
 	NumberOfPassengers 			Int,
-	Model 						VARCHAR(256),
+	Model 						VARCHAR(64),
 
 ); /* End of Creation of Aircraft Table*/
 /* Set up the Primary Keys */
@@ -103,6 +103,10 @@ Description
 */
 create table Flight (
 	FlightId 					Int 				NOT NULL,	/* PK */
+	DepartureTime				Date,
+	ArrivalTime					Date,
+	FlightType					Varchar(64),
+
 
 ); /* End of Creation of Flight Table*/
 /* Set up the Primary Keys */
