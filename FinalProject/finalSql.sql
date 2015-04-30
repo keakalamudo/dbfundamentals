@@ -198,7 +198,7 @@ create table IncidenceReport (
 ALTER TABLE IncidenceReport
 ADD CONSTRAINT ReportID_PK
 PRIMARY KEY (ReportID);
-REFERENCES Employee (EmployeeID);
+REFERENCES Employee (ReportID);
 
 ALTER TABLE IncidenceReport
 ADD CONSTRAINT EmplyeeID_FK
