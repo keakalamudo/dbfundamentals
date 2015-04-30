@@ -76,7 +76,19 @@ ADD CONSTRAINT  AirportFaaCodeForeignKey
 FOREIGN KEY (AirportFaaCode)
 REFERENCES Airport (AirportFaaCode);
 
+/*******************************************************************************
+Name 
 
+Description
+*/
+create table Name (
+	Attr 						VARCHAR(256) 		not null,	/* PK */
+
+); /* End of Creation of Name Table */
+
+/*
+	THIS IS THE TEMPLATE THIS IS THE TEMPLATE THIS IS THE TEMPLATE
+*/
 /*******************************************************************************
 Name 
 
