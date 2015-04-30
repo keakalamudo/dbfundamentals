@@ -1,4 +1,7 @@
 
+
+
+
 /******************************************************************************  
 CECS 323 Final Project Data Description
 
@@ -39,7 +42,7 @@ CREATE TABLE Airport (
 	FaaCode 				VARCHAR(16) 		NOT NULL,	/* PK */
 	Name					VARCHAR(64),
 	City					VARCHAR(64),
-	Country					VARCHAR(64),
+	Country					VARCHAR(64)
 ); /* End of Creation of Airport Table */
 
 /* Set up the Primary Key */
@@ -56,7 +59,7 @@ This table models an airline's presence at an airport.
 create table AirportAirline (
 	Terminal 				VARCHAR(64) 		NOT NULL,	/* PK */
 	IcaoCode 				VARCHAR(8) 			NOT NULL,	/* FK(Airline) -> PK */
-	FaaCode 				VARCHAR(8) 			NOT NULL,	/* FK(Airport) -> PK */
+	FaaCode 				VARCHAR(8) 			NOT NULL	/* FK(Airport) -> PK */
 
 ); /* End of Creation of Name Table */
 
@@ -88,7 +91,7 @@ create table Aircraft (
 	TailNumber 					VARCHAR(64) 		NOT NULL,	/* PK */
 	Name 						VARCHAR(64),
 	NumberOfPassengers 			Int,
-	Model 						VARCHAR(64),
+	Model 						VARCHAR(64)
 
 ); /* End of Creation of Aircraft Table*/
 /* Set up the Primary Keys */
@@ -114,15 +117,15 @@ ALTER TABLE Flight
 ADD CONSTRAINT FlightPrimaryKey
 PRIMARY KEY (FlightId);
 
-
+/*******************************************************************************
+Flight */
 CREATE TABLE FlightSchedule (
-	FlightSheduleId			    VARCHAR(20)		NOT NULL, /* PK */
+	FlightScheduleId			VARCHAR(20)		NOT NULL, /* PK */
 	FlightId 				    VARCHAR(20),
 	DepartureTime				Date,
 	ArrivalTime					Date,
 	DepartureAirport			Varchar(64),
-	ArrivalAirport				Varchar(64),
-	Length						AS ArrivalTime - DepartureTime	
+	ArrivalAirport				Varchar(64)
 
 );
 ALTER TABLE FlightSchedule 
@@ -133,7 +136,7 @@ PRIMARY KEY (FlightScheduleId)
 ALTER TABLE FlightSchedule
 ADD CONSTRAINT FlightScheduleForeignKey
 FOREIGN KEY (FlightId);
-REFERENCES Flights (FlightId);
+REFERENCES Flight (FlightId);
 /*******************************************************************************
 Employee
 
