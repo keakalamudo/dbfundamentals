@@ -102,18 +102,19 @@ Flight
 Description
 */
 create table Flight (
-	FlightID 					VARCHAR(20)			NOT NULL,	/* PK */
+	FlightId 					Int 				NOT NULL,	/* PK */
 	DepartureTime				Date,
 	ArrivalTime					Date,
 	FlightType					Varchar(64),
+	Destination					,	/* This is multivalued */
+	Length						AS ArrivalTime - DepartureTime	
 
 
 ); /* End of Creation of Flight Table*/
 /* Set up the Primary Keys */
 ALTER TABLE Flight
 ADD CONSTRAINT FlightPrimaryKey
-PRIMARY KEY (FlightID);
-
+PRIMARY KEY ();
 
 /*******************************************************************************
 Employee
